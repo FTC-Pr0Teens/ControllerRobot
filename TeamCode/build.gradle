@@ -25,4 +25,6 @@ android {
 
 dependencies {
     implementation project(':FtcRobotController')
+    implementation 'org.openftc:opencv-repackaged-bundled-dylibs:4.7.0-A'
+
 }
