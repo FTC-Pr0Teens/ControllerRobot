@@ -1,17 +1,23 @@
 package org.firstinspires.ftc.teamcode.subsystems;
 
+import android.graphics.Rect;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.util.AprilTagPipeline;
 import org.firstinspires.ftc.teamcode.util.ContourPipeline;
-import org.firstinspires.ftc.teamcode.util.Yellowcountour;
+import org.firstinspires.ftc.teamcode.util.YellowPipeline;
+import org.opencv.core.MatOfPoint;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-public class CameraSubsystem {
+import java.util.ArrayList;
+import java.util.List;
+
+public class  CameraSubsystem {
     public OpenCvCamera camera;
     private ContourPipeline contourPipeline; // pipeline designed to look for contours of the poles
     private AprilTagPipeline aprilTagPipeline;
@@ -29,6 +35,13 @@ public class CameraSubsystem {
     // UNITS ARE METERS
     double tagsize = 0.166;
 
+
+    private List<MatOfPoint> contours = new ArrayList<>();
+    private Rect largestRect = null;
+    private double largestArea = 0;
+    private long processTime = 0;
+
+
     public enum PipelineName {
         CONTOUR_PIPELINE, APRILTAG_PIPELINE
     }
@@ -45,6 +58,7 @@ public class CameraSubsystem {
             contourPipeline = new ContourPipeline();
             selectedPipeline = contourPipeline;
         }
+
 
         // initiate the needed parameters
         cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId","id",hardwareMap.appContext.getPackageName());
@@ -77,4 +91,5 @@ public class CameraSubsystem {
     public AprilTagPipeline getAprilTagPipeline() {
         return aprilTagPipeline;
     }
+
 }

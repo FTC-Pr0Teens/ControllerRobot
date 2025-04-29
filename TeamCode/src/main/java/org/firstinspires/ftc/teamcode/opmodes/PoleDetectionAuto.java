@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
-import android.os.Build;
-
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 
@@ -11,11 +9,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.subsystems.CameraSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.IMUSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.MecanumDriveSubsystem;
-
-
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 /*
 This OpMode consist of moving the robot autonomously and having it choose the largest yellow object
@@ -51,6 +44,8 @@ public class PoleDetectionAuto extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         waitForStart();
+
+
 
         // multi threads in LinearOpmode
 

@@ -29,6 +29,7 @@ public class PIDController {
 
     public double PIDOutput(double current, double target) {
         double error = target - current;
+
         integralSum += error * timer.seconds();
         time = timer.seconds();
         derivative = (error - lastError) / time;

@@ -13,8 +13,8 @@ import org.openftc.easyopencv.OpenCvPipeline;
 /*
 AVERAGE PROCESSING TIME:
 This pipeline is designed to filter out the yellow pole and replace the background with black
-*/
-public class Yellowcountour extends OpenCvPipeline {
+ */
+public class YellowPipeline extends OpenCvPipeline {
 
     // for tracking pipeline processing speed
     private ElapsedTime timer = new ElapsedTime();
@@ -30,11 +30,11 @@ public class Yellowcountour extends OpenCvPipeline {
     private final Scalar LOWER_HSV = new Scalar(10, 130, 130);
 
     // final output image
-    private Mat output = new Mat();
-    private Mat threshold = new Mat();
+    Mat output = new Mat();
 
     @Override
     public Mat processFrame(Mat input) {
+
         // blurring the input image to improve colour detection
         Mat blur = new Mat();
         Imgproc.blur(input, blur, KERNEL);
@@ -44,6 +44,7 @@ public class Yellowcountour extends OpenCvPipeline {
         Imgproc.cvtColor(blur, hsv, Imgproc.COLOR_RGB2HSV);
 
         // create a HSV threshold that filters out yellow shades
+        Mat threshold = new Mat();
         Core.inRange(hsv, LOWER_HSV, UPPER_HSV, threshold);
 
         // use the threshold image as a mask to filter out all the yellow in the original
@@ -61,6 +62,7 @@ public class Yellowcountour extends OpenCvPipeline {
         // deallocating matrix memory
         blur.release();
         hsv.release();
+        threshold.release();
         masked.release();
 
         // tracking pipeline speed
@@ -73,11 +75,4 @@ public class Yellowcountour extends OpenCvPipeline {
     public double getProcessTime() {
         return processTime;
     }
-
-    public boolean poleDetected() {
-        // Check if any pixels are detected in the threshold image
-        return Core.countNonZero(threshold) > 1000; // Adjust threshold as needed
-    }
-
-
 }

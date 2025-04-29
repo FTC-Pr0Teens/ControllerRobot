@@ -47,7 +47,7 @@ public class PoleDetectionTest extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
         // allows telemetry to output to phone and dashboard
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Executor executor = Executors.newFixedThreadPool(4);
+         //   Executor executor = Executors.newFixedThreadPool(4);
 
         }
 
@@ -86,7 +86,9 @@ public class PoleDetectionTest extends LinearOpMode {
                 telemetry.addLine();
 
                 // point camera towards the detected pole
-                turret.followPID(CameraSubsystem.CENTER_X, (int) Math.round(camera.getPipeline().largestContourCenter().x));
+                // Reverse the direction by swapping the order of arguments
+                turret.followPID((int) Math.round(camera.getPipeline().largestContourCenter().x), CameraSubsystem.CENTER_X);
+
             } else {
                 telemetry.addLine("No contours detected");
                 turret.stop();
